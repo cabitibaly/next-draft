@@ -1,7 +1,8 @@
 "use client"
 import Image from "next/image"
-import { useRef, useEffect } from "react"
+import { useRef, useEffect, useState } from "react"
 import { gsap } from "gsap"
+import { X } from "lucide-react"
 
 const images = [
     "/story-1.webp",
@@ -15,56 +16,14 @@ export default function Home() {
     const containerRef = useRef<HTMLDivElement>(null)  
     const isAnimating = useRef<boolean>(false)
     const autoplayRef = useRef<NodeJS.Timeout | null>(null)
-
-    // const nextSlide = () => {
-    //     if (!containerRef.current) return
-
-    //     const slides = Array.from(containerRef.current.children)
-
-    //     const first = slides[0]
-    //     const second = slides[1]
-    //     const third = slides[2]
-
-    //     isAnimating.current = true
-
-    //     const tl = gsap.timeline({
-    //         onComplete: () => {
-    //             containerRef.current?.prepend(third)
-    //             isAnimating.current = false
-    //         }
-    //     })
-
-    //     tl.to(second, {
-    //         zIndex: 2,
-    //         width: "100%",
-    //         top: "0px",
-    //         filter: "blur(0px)",
-    //         duration: 1,
-    //         ease: "power4.inOut"
-    //     }, 0)
-
-    //     tl.to(first, {
-    //         zIndex: 1,
-    //         width: "90%",
-    //         top: "-24px",
-    //         filter: "blur(4px)",
-    //         duration: 1,
-    //         ease: "power4.inOut"
-    //     }, 0)
-
-    //     tl.to(
-    //         third,
-    //         {            
-    //             zIndex: 0,
-    //             width: "80%",
-    //             top: "-48px",
-    //             filter: "blur(6px)",
-    //             duration: 1,
-    //             ease: "power4.inOut"
-    //         },
-    //         0
-    //     )
-    // }
+    const textRef = useRef<HTMLSpanElement | null>(null)
+    const linesRef = useRef<HTMLDivElement | null>(null)
+    const rightRef = useRef<HTMLDivElement | null>(null)
+    const leftRef = useRef<HTMLDivElement | null>(null)
+    const menuBtnRef = useRef<HTMLDivElement | null>(null)
+    const closeRef = useRef<HTMLDivElement | null>(null)
+    const menuRef = useRef<HTMLDivElement | null>(null)
+    const [isOpen, setIsOpen] = useState(false)
 
     const nextSlide = () => {
         if (!containerRef.current || isAnimating.current) return
@@ -125,8 +84,108 @@ export default function Home() {
 
     }, [])
 
+    const handleMouseEnter = () => {
+        if (!textRef.current || !linesRef.current) return
+        
+        gsap.to(textRef.current, {
+            x: -96,            
+            opacity: 0,
+            duration: 0.5,
+            ease: "power4.out"
+        })
+
+        gsap.to(linesRef.current, {            
+            scaleX: 1,
+            transformOrigin: "right",
+            duration: 0.5,            
+            ease: "power4.out"
+        })
+    
+    }
+
+    const handleMouseLeave = () => {
+        if (!textRef.current || !linesRef.current) return
+
+        gsap.to(textRef.current, {
+            x: 0,
+            opacity: 1,
+            duration: 0.5,
+            ease: "power4.out"
+        })
+
+        gsap.to(linesRef.current, {            
+            scaleX: 0.4,
+            transformOrigin: "right",
+            duration: 0.5,            
+            ease: "power4.out"
+        })
+    }
+
+    useEffect(() => {
+        const close = closeRef.current
+        const menuBtn = menuBtnRef.current
+        const left = leftRef.current
+        const right = rightRef.current
+        const menu = menuRef.current
+
+        if (!close || !menuBtn || !left || !right || !menu) return
+
+        gsap.set([left, right], { scaleY: 0 })
+        gsap.set(menu, { display: "none" })
+
+        const tl = gsap.timeline({ paused: true, reversed: true });
+
+        tl.to(menu, {
+            display: "flex",
+            duration: 1,
+            ease: "power4.inOut"
+        }, 0)
+
+        tl.to(right, {
+            scaleY: 1,
+            transformOrigin: "bottom",
+            duration: 1,
+            ease: "power4.inOut"
+        }, 0)
+
+        tl.to(left, {
+            scaleY: 1,
+            duration: 1,
+            transformOrigin: "top",
+            ease: "power4.inOut"
+        }, 0)
+
+        const openMenu = () => tl.play()
+        const closeMenu = () => tl.reverse()
+
+        menuBtn.addEventListener("click", openMenu)
+        close.addEventListener("click", closeMenu)
+
+        return () => {
+            menuBtn.removeEventListener("click", openMenu)
+            close.removeEventListener("click", closeMenu)
+        }
+
+    }, [])
+
     return (
-        <div className="relative w-screen h-screen overflow-hidden flex flex-col">                
+        <div className="relative w-screen h-screen overflow-hidden flex flex-col"> 
+            <div ref={menuBtnRef} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="cursor-pointer overflow-hidden z-30 absolute top-8 right-8 py-1.5 px-3 w-[108px] h-9 bg-[#111113] rounded-[4px] flex items-center justify-end gap-3 border border-dashed border-transparent group transition-all duration-500 ease-out hover:border-[#111113] hover:bg-white">
+                <span ref={textRef} className="absolute left-3 text-base font-normal text-white">Menu</span>
+                <div ref={linesRef} className="transform origin-right scale-x-40 w-full flex flex-col items-center justify-center gap-1.5">
+                    <div className="w-full h-[1px] bg-white transition-all duration-500 group-hover:invert-100"></div>
+                    <div className="w-full h-[1px] bg-white transition-all duration-500 group-hover:invert-100"></div>
+                </div>
+            </div> 
+            <div ref={menuRef} className={`fixed top-0 left-0 z-50 w-full h-full items-center justify-center`}>
+                <div ref={leftRef} className="w-1/2 scale-y-0 h-full bg-[#EEEEF0]"></div>
+                <div ref={rightRef} className="w-1/2 scale-y-0 h-full bg-[#111113]">
+                    <div ref={closeRef} className="cursor-pointer overflow-hidden z-30 absolute top-8 right-8 py-1.5 px-3 w-[108px] h-9 bg-transparent rounded-[4px] flex items-center justify-end gap-3 border border-dashed border-white">
+                        <span className="absolute left-3 text-base font-normal text-white">Fermer</span>
+                        <X strokeWidth={1} size={24} color="#EEEEF0" />
+                    </div>
+                </div>
+            </div>              
             <div className="z-10 relative w-full h-full after:content-[''] after:absolute after:w-full after:h-full after:backdrop-blur-xl">
                 <Image src={"/story-4.webp"} alt='story' fill className='object-cover' />
             </div>
