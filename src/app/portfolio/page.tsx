@@ -2,7 +2,7 @@
 import Image from "next/image"
 import { useRef, useEffect, useState } from "react"
 import { gsap } from "gsap"
-import { X } from "lucide-react"
+import { ArrowRight, X } from "lucide-react"
 
 const images = [
     "/story-1.webp",
@@ -22,8 +22,8 @@ export default function Home() {
     const leftRef = useRef<HTMLDivElement | null>(null)
     const menuBtnRef = useRef<HTMLDivElement | null>(null)
     const closeRef = useRef<HTMLDivElement | null>(null)
-    const menuRef = useRef<HTMLDivElement | null>(null)
-    const [isOpen, setIsOpen] = useState(false)
+    const menuRef = useRef<HTMLDivElement | null>(null) 
+    const menuLinesRef = useRef<(HTMLDivElement | null)[]>([])    
 
     const nextSlide = () => {
         if (!containerRef.current || isAnimating.current) return
@@ -127,11 +127,15 @@ export default function Home() {
         const left = leftRef.current
         const right = rightRef.current
         const menu = menuRef.current
+        const menuLines = menuLinesRef.current
 
-        if (!close || !menuBtn || !left || !right || !menu) return
+        if (!close || !menuBtn || !left || !right || !menu || !menuLines) return
 
         gsap.set([left, right], { scaleY: 0 })
         gsap.set(menu, { display: "none" })
+        gsap.set(menuLinesRef.current, { scaleX: 0 })
+        gsap.set(".menu_text", { y: 72 })
+        gsap.set(".menu_arrow", { opacity: 0 })
 
         const tl = gsap.timeline({ paused: true, reversed: true });
 
@@ -154,6 +158,28 @@ export default function Home() {
             transformOrigin: "top",
             ease: "power4.inOut"
         }, 0)
+
+        menuLines.forEach((line, index) => {
+            tl.to([line, ], {
+                scaleX: 1,
+                duration: 1.25,
+                transformOrigin: "left",
+                ease: "expo.in",
+            }, index * 0.1)                            
+        
+        })
+
+        tl.to(".menu_text", {
+            y: 0,
+            duration: 1,
+            ease: "expo.inOut"
+        }, 0.5)
+
+        tl.to(".menu_arrow", {
+            opacity: 1,
+            duration: 1.5,
+            ease: "expo.inOut"
+        }, 0.5)
 
         const openMenu = () => tl.play()
         const closeMenu = () => tl.reverse()
@@ -178,7 +204,48 @@ export default function Home() {
                 </div>
             </div> 
             <div ref={menuRef} className={`fixed top-0 left-0 z-50 w-full h-full items-center justify-center`}>
-                <div ref={leftRef} className="w-1/2 scale-y-0 h-full bg-[#EEEEF0]"></div>
+                <div ref={leftRef} className="w-1/2 scale-y-0 h-full bg-[#EEEEF0] grid grid-rows-4">
+                    <div className="p-8 relative w-full flex items-center justify-between group">
+                        <div className="z-10 overflow-hidden flex items-center justify-center">
+                            <div className="menu_text text-black text-7xl font-medium uppercase">Accueil</div>
+                        </div> 
+                        <div className="z-10 menu_arrow border border-[#111113] rounded-full size-14 bg-transparent flex items-center justify-center">
+                            <ArrowRight strokeWidth={0.75} size={36} color="#111113" className="-rotate-45 transition-all ease-in-out duration-500 group-hover:rotate-0" />
+                        </div>                       
+                        <div ref={e => {menuLinesRef.current[0] = e}} className="absolute left-0 bottom-0 w-full h-[1px] bg-[#111113]" />
+                        <div className="z-0 absolute left-0 bottom-0 w-full h-full bg-black/10 scale-y-0 transform origin-bottom transition-all duration-500 group-hover:scale-y-100" />
+                    </div>
+                    <div className="p-8 relative w-full flex items-center justify-between group">                        
+                        <div className="overflow-hidden flex items-center justify-center">
+                            <div className="menu_text text-black text-7xl font-medium uppercase">Projets</div>
+                        </div>
+                        <div className="menu_arrow border border-[#111113] rounded-full size-14 bg-transparent flex items-center justify-center">
+                            <ArrowRight strokeWidth={0.75} size={36} color="#111113" className="-rotate-45 transition-all ease-in-out duration-500 group-hover:rotate-0" />
+                        </div>
+                        <div className="z-0 absolute left-0 bottom-0 w-full h-full bg-black/10 scale-y-0 transform origin-bottom transition-all duration-500 group-hover:scale-y-100" />
+                        <div ref={e => {menuLinesRef.current[1] = e}} className="absolute left-0 bottom-0 w-full h-[1px] bg-[#111113]" />
+                    </div>
+                    <div className="p-8 relative w-full flex items-center justify-between group">                        
+                        <div className="overflow-hidden flex items-center justify-center">
+                            <div className="menu_text text-black text-7xl font-medium uppercase">A-propos</div>
+                        </div>
+                        <div className="menu_arrow border border-[#111113] rounded-full size-14 bg-transparent flex items-center justify-center">
+                            <ArrowRight strokeWidth={0.75} size={36} color="#111113" className="-rotate-45 transition-all ease-in-out duration-500 group-hover:rotate-0" />
+                        </div>
+                        <div className="z-0 absolute left-0 bottom-0 w-full h-full bg-black/10 scale-y-0 transform origin-bottom transition-all duration-500 group-hover:scale-y-100" />
+                        <div ref={e => {menuLinesRef.current[2] = e}} className="absolute left-0 bottom-0 w-full h-[1px] bg-[#111113]" />
+                    </div>
+                    <div className="p-8 relative w-full flex items-center justify-between group">                        
+                        <div className="overflow-hidden flex items-center justify-center">
+                            <div className="menu_text text-black text-7xl font-medium uppercase">Contact</div>
+                        </div>
+                        <div className="menu_arrow border border-[#111113] rounded-full size-14 bg-transparent flex items-center justify-center">
+                            <ArrowRight strokeWidth={0.75} size={36} color="#111113" className="-rotate-45 transition-all ease-in-out duration-500 group-hover:rotate-0" />
+                        </div>
+                        <div className="z-0 absolute left-0 bottom-0 w-full h-full bg-black/10 scale-y-0 transform origin-bottom transition-all duration-500 group-hover:scale-y-100" />
+                        <div ref={e => {menuLinesRef.current[3] = e}} className="absolute left-0 bottom-0 w-full h-[1px] bg-[#111113]" />
+                    </div>
+                </div>
                 <div ref={rightRef} className="w-1/2 scale-y-0 h-full bg-[#111113]">
                     <div ref={closeRef} className="cursor-pointer overflow-hidden z-30 absolute top-8 right-8 py-1.5 px-3 w-[108px] h-9 bg-transparent rounded-[4px] flex items-center justify-end gap-3 border border-dashed border-white">
                         <span className="absolute left-3 text-base font-normal text-white">Fermer</span>
