@@ -201,6 +201,36 @@ export default function Home() {
 
     }, [])
 
+    const handleMouseEnterClose = () => {
+        gsap.to(".close-text", {
+            x: -96,
+            opacity: 1,
+            duration: 0.5,
+            ease: "power4.out"
+        })
+
+        gsap.to(".close-icon", {
+            x: -30,
+            duration: 0.5,
+            ease: "power4.out"
+        })
+    }
+
+    const handleMouseLeaveClose = () => {
+        gsap.to(".close-text", {
+            x: 0,
+            opacity: 1,
+            duration: 0.5,
+            ease: "power4.out"
+        })
+
+        gsap.to(".close-icon", {
+            x: 0,
+            duration: 0.5,
+            ease: "power4.out"
+        })
+    }
+
     return (
         <div className="relative w-screen h-screen overflow-hidden flex flex-col"> 
             <div ref={menuBtnRef} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="cursor-pointer overflow-hidden z-30 absolute top-8 right-8 py-1.5 px-3 w-[108px] h-9 bg-[#111113] rounded-[4px] flex items-center justify-end gap-3 border border-dashed border-transparent group transition-all duration-500 ease-out hover:border-[#111113] hover:bg-white">
@@ -254,9 +284,11 @@ export default function Home() {
                     </div>
                 </div>
                 <div ref={rightRef} className="relative p-6 w-1/2 scale-y-0 h-full bg-[#111113] flex flex-col items-center justify-center gap-10 max-lg:gap-5 max-lg:w-full max-lg:h-1/2 max-sm:h-3/5">
-                    <div ref={closeRef} className="cursor-pointer overflow-hidden z-30 absolute top-8 right-8 py-1.5 px-3 w-[108px] h-9 bg-transparent rounded-[4px] flex items-center justify-end gap-3 border border-dashed border-white">
-                        <span className="absolute left-3 text-base font-normal text-white">Fermer</span>
-                        <X strokeWidth={1} size={24} color="#EEEEF0" />
+                    <div ref={closeRef} onMouseEnter={handleMouseEnterClose} onMouseLeave={handleMouseLeaveClose} className="cursor-pointer overflow-hidden z-30 absolute top-8 right-8 py-1.5 px-3 w-[108px] h-9 bg-transparent rounded-[4px] flex items-center justify-end gap-3 border border-dashed border-white">
+                        <span className="close-text absolute left-3 text-base font-normal text-white">Fermer</span>
+                        <div className="close-icon transform scale-x-100 flex items-center justify-center">
+                            <X strokeWidth={1} size={24} color="#EEEEF0" />
+                        </div>                        
                     </div>
                     <div className="px-20 w-full flex flex-col items-start justify-center gap-5 max-lg:gap-3 max-md:px-4">
                         <div className="overflow-hidden flex items-center justify-start">
