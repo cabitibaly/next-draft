@@ -2,7 +2,7 @@
 import Image from "next/image"
 import { useRef, useEffect, useState } from "react"
 import { gsap } from "gsap"
-import { ArrowRight, X } from "lucide-react"
+import { ArrowRight, Copyright, X } from "lucide-react"
 
 const images = [
     "/story-1.webp",
@@ -134,8 +134,9 @@ export default function Home() {
         gsap.set([left, right], { scaleY: 0 })
         gsap.set(menu, { display: "none" })
         gsap.set(menuLinesRef.current, { scaleX: 0 })
-        gsap.set(".menu_text", { y: 72 })
-        gsap.set(".menu_arrow", { opacity: 0 })
+        gsap.set([".menu_text", ".right-title"], { y: 72 })
+        gsap.set([".menu_arrow", ".right-paragraph"], { opacity: 0 })
+        gsap.set(".bottom-text", { y: 32 })
 
         const tl = gsap.timeline({ paused: true, reversed: true });
 
@@ -169,17 +170,23 @@ export default function Home() {
         
         })
 
-        tl.to(".menu_text", {
+        tl.to([".menu_text", ".right-title"], {
             y: 0,
             duration: 1,
             ease: "expo.inOut"
         }, 0.5)
 
-        tl.to(".menu_arrow", {
+        tl.to([".menu_arrow", ".right-paragraph"], {
             opacity: 1,
             duration: 1.5,
             ease: "expo.inOut"
         }, 0.5)
+
+        tl.to(".bottom-text", {
+            y: 0,
+            duration: 1,
+            ease: "expo.inOut"
+        }, 0.8)
 
         const openMenu = () => tl.play()
         const closeMenu = () => tl.reverse()
@@ -203,53 +210,83 @@ export default function Home() {
                     <div className="w-full h-[1px] bg-white transition-all duration-500 group-hover:invert-100"></div>
                 </div>
             </div> 
-            <div ref={menuRef} className={`fixed top-0 left-0 z-50 w-full h-full items-center justify-center`}>
-                <div ref={leftRef} className="w-1/2 scale-y-0 h-full bg-[#EEEEF0] grid grid-rows-4">
+            <div ref={menuRef} className={`fixed top-0 left-0 z-50 w-full h-full items-center justify-center max-lg:flex-col`}>
+                <div ref={leftRef} className="w-1/2 scale-y-0 h-full bg-[#F1F1EA] grid grid-rows-4 max-lg:w-full max-lg:h-1/2 max-sm:h-2/5">
                     <div className="p-8 relative w-full flex items-center justify-between group">
-                        <div className="z-10 overflow-hidden flex items-center justify-center">
-                            <div className="menu_text text-black text-7xl font-medium uppercase">Accueil</div>
+                        <div className="z-10 overflow-hidden flex items-center justify-center transform translate-x-0 origin-left transition-all duration-500 group-hover:translate-x-8">
+                            <div className="menu_text text-black text-7xl font-medium uppercase max-lg:text-4xl max-sm:text-2xl">Accueil</div>
                         </div> 
-                        <div className="z-10 menu_arrow border border-[#111113] rounded-full size-14 bg-transparent flex items-center justify-center">
-                            <ArrowRight strokeWidth={0.75} size={36} color="#111113" className="-rotate-45 transition-all ease-in-out duration-500 group-hover:rotate-0" />
+                        <div className="z-10 menu_arrow border border-[#111113] rounded-full size-14 bg-transparent flex items-center justify-center max-lg:size-10 max-sm:size-7">
+                            <ArrowRight strokeWidth={0.75} color="#111113" className="size-9 -rotate-45 transition-all ease-in-out duration-500 group-hover:rotate-0 max-lg:size-7 max-sm:size-4" />
                         </div>                       
                         <div ref={e => {menuLinesRef.current[0] = e}} className="absolute left-0 bottom-0 w-full h-[1px] bg-[#111113]" />
                         <div className="z-0 absolute left-0 bottom-0 w-full h-full bg-black/10 scale-y-0 transform origin-bottom transition-all duration-500 group-hover:scale-y-100" />
                     </div>
                     <div className="p-8 relative w-full flex items-center justify-between group">                        
-                        <div className="overflow-hidden flex items-center justify-center">
-                            <div className="menu_text text-black text-7xl font-medium uppercase">Projets</div>
+                        <div className="overflow-hidden flex items-center justify-center transform translate-x-0 origin-left transition-all duration-500 group-hover:translate-x-8">
+                            <div className="menu_text text-black text-7xl font-medium uppercase max-lg:text-4xl max-sm:text-2xl">Projets</div>
                         </div>
-                        <div className="menu_arrow border border-[#111113] rounded-full size-14 bg-transparent flex items-center justify-center">
-                            <ArrowRight strokeWidth={0.75} size={36} color="#111113" className="-rotate-45 transition-all ease-in-out duration-500 group-hover:rotate-0" />
+                        <div className="z-10 menu_arrow border border-[#111113] rounded-full size-14 bg-transparent flex items-center justify-center max-lg:size-10 max-sm:size-7">
+                            <ArrowRight strokeWidth={0.75} color="#111113" className="size-9 -rotate-45 transition-all ease-in-out duration-500 group-hover:rotate-0 max-lg:size-7 max-sm:size-4" />
                         </div>
                         <div className="z-0 absolute left-0 bottom-0 w-full h-full bg-black/10 scale-y-0 transform origin-bottom transition-all duration-500 group-hover:scale-y-100" />
                         <div ref={e => {menuLinesRef.current[1] = e}} className="absolute left-0 bottom-0 w-full h-[1px] bg-[#111113]" />
                     </div>
                     <div className="p-8 relative w-full flex items-center justify-between group">                        
-                        <div className="overflow-hidden flex items-center justify-center">
-                            <div className="menu_text text-black text-7xl font-medium uppercase">A-propos</div>
+                        <div className="overflow-hidden flex items-center justify-center transform translate-x-0 origin-left transition-all duration-500 group-hover:translate-x-8">
+                            <div className="menu_text text-black text-7xl font-medium uppercase max-lg:text-4xl max-sm:text-2xl">A-propos</div>
                         </div>
-                        <div className="menu_arrow border border-[#111113] rounded-full size-14 bg-transparent flex items-center justify-center">
-                            <ArrowRight strokeWidth={0.75} size={36} color="#111113" className="-rotate-45 transition-all ease-in-out duration-500 group-hover:rotate-0" />
+                        <div className="z-10 menu_arrow border border-[#111113] rounded-full size-14 bg-transparent flex items-center justify-center max-lg:size-10 max-sm:size-7">
+                            <ArrowRight strokeWidth={0.75} color="#111113" className="size-9 -rotate-45 transition-all ease-in-out duration-500 group-hover:rotate-0 max-lg:size-7 max-sm:size-4" />
                         </div>
                         <div className="z-0 absolute left-0 bottom-0 w-full h-full bg-black/10 scale-y-0 transform origin-bottom transition-all duration-500 group-hover:scale-y-100" />
                         <div ref={e => {menuLinesRef.current[2] = e}} className="absolute left-0 bottom-0 w-full h-[1px] bg-[#111113]" />
                     </div>
                     <div className="p-8 relative w-full flex items-center justify-between group">                        
-                        <div className="overflow-hidden flex items-center justify-center">
-                            <div className="menu_text text-black text-7xl font-medium uppercase">Contact</div>
+                        <div className="overflow-hidden flex items-center justify-center transform translate-x-0 origin-left transition-all duration-500 group-hover:translate-x-8">
+                            <div className="menu_text text-black text-7xl font-medium uppercase max-lg:text-4xl max-sm:text-2xl">Contact</div>
                         </div>
-                        <div className="menu_arrow border border-[#111113] rounded-full size-14 bg-transparent flex items-center justify-center">
-                            <ArrowRight strokeWidth={0.75} size={36} color="#111113" className="-rotate-45 transition-all ease-in-out duration-500 group-hover:rotate-0" />
+                        <div className="z-10 menu_arrow border border-[#111113] rounded-full size-14 bg-transparent flex items-center justify-center max-lg:size-10 max-sm:size-7">
+                            <ArrowRight strokeWidth={0.75} color="#111113" className="size-9 -rotate-45 transition-all ease-in-out duration-500 group-hover:rotate-0 max-lg:size-7 max-sm:size-4" />
                         </div>
                         <div className="z-0 absolute left-0 bottom-0 w-full h-full bg-black/10 scale-y-0 transform origin-bottom transition-all duration-500 group-hover:scale-y-100" />
                         <div ref={e => {menuLinesRef.current[3] = e}} className="absolute left-0 bottom-0 w-full h-[1px] bg-[#111113]" />
                     </div>
                 </div>
-                <div ref={rightRef} className="w-1/2 scale-y-0 h-full bg-[#111113]">
+                <div ref={rightRef} className="relative p-6 w-1/2 scale-y-0 h-full bg-[#111113] flex flex-col items-center justify-center gap-10 max-lg:gap-5 max-lg:w-full max-lg:h-1/2 max-sm:h-3/5">
                     <div ref={closeRef} className="cursor-pointer overflow-hidden z-30 absolute top-8 right-8 py-1.5 px-3 w-[108px] h-9 bg-transparent rounded-[4px] flex items-center justify-end gap-3 border border-dashed border-white">
                         <span className="absolute left-3 text-base font-normal text-white">Fermer</span>
                         <X strokeWidth={1} size={24} color="#EEEEF0" />
+                    </div>
+                    <div className="px-20 w-full flex flex-col items-start justify-center gap-5 max-lg:gap-3 max-md:px-4">
+                        <div className="overflow-hidden flex items-center justify-start">
+                            <div className="right-title text-4xl text-white font-medium uppercase max-lg:text-2xl">Contact</div>
+                        </div>
+                        <div className="right-paragraph flex flex-col items-start justify-center gap-1">
+                            <p className="text-lg text-white font-medium max-lg:text-base">EMAIL : contact@clement.alexandre.dev</p>
+                            <p className="text-lg text-white font-medium max-lg:text-base">TEL : +33 (0)6 00 00 00 00</p>
+                        </div>
+                    </div>
+                    <div className="px-20 w-full flex flex-col items-start justify-center gap-5 max-lg:gap-3 max-md:px-4">
+                        <div className="overflow-hidden flex items-center justify-start">
+                            <div className="right-title text-4xl text-white font-medium uppercase max-lg:text-2xl">Localisation</div>
+                        </div>
+                        <div className="right-paragraph flex flex-col items-start justify-center gap-1">
+                            <p className="text-lg text-white font-medium uppercase max-lg:text-base">Bobo-Dioulasso,</p>
+                            <p className="text-lg text-white font-medium uppercase max-lg:text-base">Burkina Faso, Afrique-Ouest</p>
+                        </div>
+                    </div>
+                    <div className="px-6 absolute bottom-6 w-full flex items-center justify-between gap-4">
+                        <div className="overflow-hidden flex items-center justify-center">
+                            <div className="bottom-text flex items-center justify-center gap-1">
+                                <Copyright strokeWidth={1} size={20} color="#EEEEF0" />
+                                <span className="text-base text-white font-medium hidden max-md:block">2026</span>
+                                <span className="text-base text-white font-medium max-md:hidden">2026, tous les droits réservés</span>
+                            </div>                            
+                        </div>
+                        <div className="overflow-hidden flex items-center justify-center">
+                            <div className="bottom-text text-base text-white font-medium">11:37:06 AM, UTC </div>
+                        </div>
                     </div>
                 </div>
             </div>              
