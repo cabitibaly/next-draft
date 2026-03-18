@@ -17,12 +17,10 @@ const images = [
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 
 const Parallax = () => {
-    const navRef = useRef<HTMLDivElement>(null)
-    const previewRef = useRef<HTMLDivElement>(null)
+    const navRef = useRef<HTMLDivElement>(null)    
     const [activeIndex, setActiveIndex] = useState(0)
 
-    useGSAP(() => {
-        const colors =["#111113", "#fb2c36", "#737373", "#fb64b6", "#05df72"]
+    useGSAP(() => {        
 
         gsap.utils.toArray<HTMLDivElement>(".parallax-container").forEach((container, index) => {
             const img = container.querySelector("img")
@@ -40,7 +38,6 @@ const Parallax = () => {
                         start: "top bottom",
                         end: "bottom top",
                         scrub: true,
-                        markers: true,
                     }
                 }
             )
