@@ -14,11 +14,29 @@ const images = [
     "/story-5.webp",
 ]
 
+const texts = [
+    "Plateforme de support technique",
+    "Gestion des tickets simplifiée",
+    "Suivi en temps réel",
+    "Support client optimisé",
+    "Analyse et reporting avancé",
+]
+
+const colors = [
+    "bg-[#338DFF]",
+    "bg-[#FFA500]",
+    "bg-[#00C2FF]",
+    "bg-[#FFA500]",
+    "bg-[#00C2FF]",
+]
+
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 
 const Parallax = () => {
     const navRef = useRef<HTMLDivElement>(null)    
+    const titleRef = useRef<HTMLDivElement>(null)
     const [activeIndex, setActiveIndex] = useState(0)
+    const [color, setColor] = useState(colors[0])
 
     useGSAP(() => {        
 
@@ -56,6 +74,22 @@ const Parallax = () => {
         })        
     })
 
+    useEffect(() => {
+        if (!titleRef.current) return
+
+        gsap.set(titleRef.current, { y: 20, opacity: 0 })
+
+        const tl = gsap.timeline()
+
+        tl.to(titleRef.current, {
+            y: 0,
+            opacity: 1,
+            duration: 0.9,
+            ease: "power4.inOut"
+        })
+
+    }, [activeIndex])
+
     return (
         <div className='bg-[#111113] py-0 w-screen min-h-screen flex flex-col items-center justify-center'>
             {
@@ -68,9 +102,32 @@ const Parallax = () => {
                 ))
             }
 
-            <div ref={navRef} className="fixed bottom-6 z-40 py-1 w-1/3 h-24 flex items-center justify-start overflow-hidden rounded-2xl transition-colors after:content-[''] after:absolute after:w-full after:h-full after:backdrop-blur-xl">
-                <div className="relative z-50 ml-1 w-1/5 h-full overflow-hidden rounded-xl">
-                    <Image key={activeIndex} src={images[activeIndex]} alt='story' fill className='object-cover' />
+            <div 
+                ref={navRef} 
+                className="
+                    fixed bottom-6 z-40 py-1 w-1/3 h-20 flex items-center justify-between gap-4 overflow-hidden rounded-2xl transition-colors after:content-[''] after:absolute after:w-full after:h-full after:backdrop-blur-xl
+                    max-xl:w-2/5 max-lg:w-1/2 max-md:w-3/4 max-xs:w-full
+                "
+            >
+                <div className="h-full flex items-center gap-2">
+                    <div className="relative z-50 ml-1 w-24! h-full overflow-hidden rounded-xl">
+                        <Image key={activeIndex} src={images[activeIndex]} alt='story' fill className='object-cover' />
+                    </div>
+                    <div className="h-full flex flex-col items-start justify-center">
+                        <div className="z-1 flex items-center justify-center max-md:left-4">
+                            <div className="text-base text-neutral-400 font-space-grotesk font-medium">0</div>
+                            <div className="text-base text-neutral-400 font-space-grotesk font-medium">{activeIndex + 1}</div>
+                            <div className="text-base text-neutral-400 font-space-grotesk font-medium">/</div>
+                            <div className="text-base text-neutral-400 font-space-grotesk font-medium">0</div>
+                            <div className="text-base text-neutral-400 font-space-grotesk font-medium">{images.length}</div>
+                        </div>
+                        <div className="z-1 overflow-hidden">
+                            <div ref={titleRef} className="text-base text-white font-medium uppercase max-xs:text-xs">{texts[activeIndex]}</div>                        
+                        </div>
+                    </div>
+                </div>
+                <div key={activeIndex} className={`mr-1 z-1 size-10 rounded-full aspect-square duration-500 ease-in-out ${colors[activeIndex]} transition-colors`}>
+
                 </div>
             </div>
         </div>

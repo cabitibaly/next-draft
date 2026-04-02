@@ -15,7 +15,7 @@ const Methode = () => {
             
             items.forEach((item, index) => {
                 if (index !== 0) {
-                gsap.set(item, { yPercent: 100 })
+                    gsap.set(item, { yPercent: 100 })
                 }
             })
 
@@ -57,7 +57,7 @@ const Methode = () => {
             <div className="w-4/5 h-3/5 flex shadow-xl overflow-hidden bg-red-400">
 
             </div>
-            <div className="relative overflow-hidden w-full h-full flex items-center justify-center">                
+            <div className="relative overflow-hidden w-full h-full flex flex-col items-center justify-center">                
                 <div className="item absolute w-4/5 h-full flex shadow-xl overflow-hidden bg-stone-400">
 
                 </div>                
