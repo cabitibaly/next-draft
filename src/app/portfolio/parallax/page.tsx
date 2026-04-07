@@ -122,7 +122,7 @@ const Parallax = () => {
                             <div className="text-base text-neutral-400 font-space-grotesk font-medium">{images.length}</div>
                         </div>
                         <div className="z-1 overflow-hidden">
-                            <div ref={titleRef} className="text-base text-white font-medium uppercase max-xs:text-xs">{texts[activeIndex]}</div>                        
+                            <div ref={titleRef} className="mix-blend-difference text-base text-white font-medium uppercase max-xs:text-xs">{texts[activeIndex]}</div>                        
                         </div>
                     </div>
                 </div>
