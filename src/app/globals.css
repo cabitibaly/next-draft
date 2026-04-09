@@ -170,3 +170,31 @@ html {
     max-width: calc(100% - clamp(1.8rem,1.8rem + 3.2/960 * (100vw - 480px),3rem));    
   }
 }
+
+.container {
+    overflow-y: scroll;
+    height: 100vh;
+    scroll-snap-type: mandatory;
+    scroll-snap-points-y: repeat(100vh);
+    scroll-snap-type: y mandatory;
+}
+
+.section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    scroll-snap-align: start;
+    position: relative;
+}
+
+.section-01 {
+    background-color: maroon;
+}
+.section-02 {
+    background-color: navy;
+}
+.section-03 {
+    background-color: gold;
+}
