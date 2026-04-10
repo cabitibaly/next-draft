@@ -1,13 +1,11 @@
 "use client"
 
-import StackAnimation from '@/components/animation/stackAnimation'
 import ProjetCard from '@/components/projet/projetCard'
 import ProjetNav from '@/components/projet/projetNav'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import Image from 'next/image'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 const images = [
     "/story-1.webp",
@@ -44,8 +42,9 @@ const projects = images.map((image, i) => ({
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 
 const ListeProjet = () => {
-    const [activeIndex, setActiveIndex] = useState<number>(0)         
-    const containerRef = useRef<HTMLDivElement>(null) 
+    const [activeIndex, setActiveIndex] = useState<number>(0)
+    const [percentage, setPercentage] = useState<number>(0)  
+    const sectionRef = useRef<HTMLElement>(null)
 
     useGSAP(() => {        
 
@@ -83,8 +82,25 @@ const ListeProjet = () => {
         })        
     })
 
+    useGSAP(() => {
+        if (!sectionRef.current) return
+
+        const trigger = ScrollTrigger.create({
+            trigger: sectionRef.current,
+            start: "top top",
+            end: "bottom bottom",
+            scrub: true,
+            onUpdate: (self) => {
+                const percent = Math.round(self.progress * 100)
+                setPercentage(percent)
+            }
+        })
+
+        return () => trigger.kill()
+    }, [])
+
     return (
-        <section className='relative w-screen min-h-screen'>            
+        <section ref={sectionRef} className='relative w-screen min-h-screen'>            
             {projects.map((project, index) => (
                 <ProjetCard
                     key={index}                    
@@ -99,6 +115,12 @@ const ListeProjet = () => {
                 texts={texts}
                 colors={colors}
             />
+            <div className='absolute z-1 bg-transparent inset-0 w-full h-full mix-blend-difference'>
+                <div className='p-4 sticky top-1/2 -translate-y-1/2 w-full flex items-center justify-between max-[900px]:top-4 max-[900px]:translate-y-0 max-[900px]:justify-end'>
+                    <div className='text-lg text-white max-[900px]:hidden'>Section {activeIndex + 1}</div>
+                    <div className='text-lg text-white'>{percentage}%</div>
+                </div>
+            </div>
         </section>
     )
 }

@@ -63,7 +63,7 @@ const ProjetCard = ({
             tl.to(digit2!, { y: 0, duration: 1.5, ease: "power4.inOut" }, "0")
             tl.to(digit3!, { y: 0, duration: 1.5, ease: "power4.inOut" }, "0")
             tl.to(digit4!, { y: 0, duration: 1.5, ease: "power4.inOut" }, "0")
-            tl.to(slash!, {rotation: 180, duration: 1.5, ease: "power4.inOut" }, "0")
+            tl.to(slash!, {rotation: 180, duration: 1.5, repeat: -1, ease: "power4.inOut" }, "0")
 
             tl.to(".type-site", {
                 y: 0,
