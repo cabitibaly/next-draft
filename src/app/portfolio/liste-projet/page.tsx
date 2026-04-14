@@ -115,7 +115,7 @@ const ListeProjet = () => {
                 texts={texts}
                 colors={colors}
             />
-            <div className='absolute z-1 bg-transparent inset-0 w-full h-full mix-blend-difference'>
+            <div className='pointer-events-none absolute z-1 bg-transparent inset-0 w-full h-full mix-blend-difference'>
                 <div className='p-4 sticky top-1/2 -translate-y-1/2 w-full flex items-center justify-between max-[900px]:top-4 max-[900px]:translate-y-0 max-[900px]:justify-end'>
                     <div className='text-lg text-white max-[900px]:hidden'>Section {activeIndex + 1}</div>
                     <div className='text-lg text-white'>{percentage}%</div>

@@ -11,6 +11,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/autoplay';
 import 'swiper/css/effect-creative';
 import 'swiper/css/effect-cards';
+import "react-photo-view/dist/react-photo-view.css";
 
 export const metadata: Metadata = {
   title: "Create Next App",
