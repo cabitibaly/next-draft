@@ -9,11 +9,11 @@ import { Swiper, SwiperSlide } from "swiper/react"
 import type { Swiper as SwiperType } from 'swiper/types';
 
 const images = [
-    "/story-1.webp",
-    "/story-2.webp",
-    "/story-3.webp",
-    "/story-4.webp",
-    "/story-5.webp",
+    "https://res.cloudinary.com/dadbkjo4m/image/upload/v1776164172/support_1_klgj6h.webp",
+    "https://res.cloudinary.com/dadbkjo4m/image/upload/v1776164168/support_2_cfephq.webp",
+    "https://res.cloudinary.com/dadbkjo4m/image/upload/v1776164171/support_3_voek9c.webp",
+    "https://res.cloudinary.com/dadbkjo4m/image/upload/v1776164174/support_4_nt7bjw.webp",
+    "https://res.cloudinary.com/dadbkjo4m/image/upload/v1776164169/support_5_rl8vul.webp",
 ]
 
 const Story = () => {
@@ -203,19 +203,19 @@ const Story = () => {
                     onNavigationPrev={() => prevSlide()}                                                                                           
                 >                
                     <SwiperSlide className=''>
-                        <Image src={"/story-1.webp"} alt='story' fill className='inner-slide object-cover' />
+                        <Image src={"https://res.cloudinary.com/dadbkjo4m/image/upload/v1776164172/support_1_klgj6h.webp"} alt='story' fill className='inner-slide object-cover' />
                     </SwiperSlide>
                     <SwiperSlide className=''>                    
-                        <Image src={"/story-2.webp"} alt='story' fill className='inner-slide object-cover' />
+                        <Image src={"https://res.cloudinary.com/dadbkjo4m/image/upload/v1776164168/support_2_cfephq.webp"} alt='story' fill className='inner-slide object-cover' />
                     </SwiperSlide>
                     <SwiperSlide className=''>
-                        <Image src={"/story-3.webp"} alt='story' fill className='inner-slide object-cover' />
+                        <Image src={"https://res.cloudinary.com/dadbkjo4m/image/upload/v1776164171/support_3_voek9c.webp"} alt='story' fill className='inner-slide object-cover' />
                     </SwiperSlide>
                     <SwiperSlide className=''>
-                        <Image src={"/story-4.webp"} alt='story' fill className='inner-slide object-cover' />
+                        <Image src={"https://res.cloudinary.com/dadbkjo4m/image/upload/v1776164174/support_4_nt7bjw.webp"} alt='story' fill className='inner-slide object-cover' />
                     </SwiperSlide>
                     <SwiperSlide className=''>
-                        <Image src={"/story-5.webp"} alt='story' fill className='inner-slide object-cover' />
+                        <Image src={"https://res.cloudinary.com/dadbkjo4m/image/upload/v1776164169/support_5_rl8vul.webp"} alt='story' fill className='inner-slide object-cover' />
                     </SwiperSlide>                
                 </Swiper>
             </div>

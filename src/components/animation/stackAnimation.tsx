@@ -4,6 +4,13 @@ import gsap from "gsap"
 import Image from "next/image"
 import { useEffect, useRef } from "react"
 
+const images = [
+    "https://res.cloudinary.com/dadbkjo4m/image/upload/v1776164172/support_1_klgj6h.webp",
+    "https://res.cloudinary.com/dadbkjo4m/image/upload/v1776164168/support_2_cfephq.webp",
+    "https://res.cloudinary.com/dadbkjo4m/image/upload/v1776164171/support_3_voek9c.webp",
+    "https://res.cloudinary.com/dadbkjo4m/image/upload/v1776164174/support_4_nt7bjw.webp",
+    "https://res.cloudinary.com/dadbkjo4m/image/upload/v1776164169/support_5_rl8vul.webp",
+]
 
 const StackAnimation = () => {
     const containerRef = useRef<HTMLDivElement>(null)
@@ -72,19 +79,19 @@ const StackAnimation = () => {
     return (
         <div ref={containerRef} className="stack w-3/4 opacity-0 aspect-[1.56] relative flex items-center justify-center max-xl:w-[85%] max-md:w-3/5">
             <div className="img-0 opacity-0 absolute -top-12 w-[80%] h-full rounded-2xl overflow-hidden blur-[6px]">
-                <Image src={"/story-1.webp"} alt='story' fill className='object-cover' />
+                <Image src={images[0]} alt='story' fill className='object-cover' />
             </div>
             <div className="img-1 absolute -top-12 w-[80%] h-full rounded-2xl overflow-hidden blur-[6px]">
-                <Image src={"/story-2.webp"} alt='story' fill className='object-cover' />
+                <Image src={images[1]} alt='story' fill className='object-cover' />
             </div>
             <div className="img-2 absolute -top-6 w-[80%] h-full rounded-2xl overflow-hidden blur-xs">
-                <Image src={"/story-3.webp"} alt='story' fill className='object-cover' />
+                <Image src={images[2]} alt='story' fill className='object-cover' />
             </div>
             <div className="img-3 absolute top-0 w-[90%] h-full rounded-2xl overflow-hidden blur-none">
-                <Image src={"/story-4.webp"} alt='story' fill className='object-cover' />
+                <Image src={images[3]} alt='story' fill className='object-cover' />
             </div>                    
             <div className="img-3 absolute top-0 w-full h-full rounded-2xl overflow-hidden blur-none">
-                <Image src={"/story-5.webp"} alt='story' fill className='object-cover' />
+                <Image src={images[4]} alt='story' fill className='object-cover' />
             </div>                    
         </div>
     )
