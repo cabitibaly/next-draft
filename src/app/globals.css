@@ -198,3 +198,28 @@ html {
 .section-03 {
     background-color: gold;
 }
+
+
+.rdp-root {
+    --rdp-accent-color: #0C7DEF;
+    --rdp-today-color: #0C7DEF;
+}
+
+.rdp-root .rdp-chevron {
+    fill: #5F606A;
+}
+
+.rdp-root .rdp-today .rdp-day_button {
+    background-color: #0C7DEF;
+    color: #EEEEF0;  
+}
+
+.rdp-root .rdp-selected .rdp-day_button {
+    background-color: #22589A;
+    color: #EEEEF0;
+}
+
+.rdp-root .rdp-day_button:hover:not(:disabled):not([aria-selected="true"]) {
+    background-color: #CDE3FF;
+    color: #0C7DEF;
+}
